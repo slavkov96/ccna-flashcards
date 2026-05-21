@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCNA Flashcards</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Pre-apply theme before paint to avoid flash
+    (function () {
+      const saved = localStorage.getItem("ccna3-prefs-v1");
+      let theme = "dark";
+      try {
+        const parsed = JSON.parse(saved) || {};
+        if (parsed.theme === "light" || parsed.theme === "dark") theme = parsed.theme;
+      } catch {}
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>CCNA Flashcards</h1>
+    <div class="controls">
+      <label>
+        Exam
+        <select id="exam-select"></select>
+      </label>
+      <label>
+        Mode
+        <select id="mode-select">
+          <option value="srs">SRS (smart)</option>
+          <option value="random">Random</option>
+          <option value="sequential">Sequential</option>
+        </select>
+      </label>
+      <label>
+        Topic
+        <select id="topic-select">
+          <option value="all">All topics</option>
+        </select>
+      </label>
+      <button id="theme-btn" class="icon-btn" title="Toggle theme" aria-label="Toggle theme"></button>
+      <button id="help-btn" class="icon-btn" title="Keyboard shortcuts (?)">?</button>
+      <button id="reset-btn" class="ghost danger" title="Reset progress">Reset</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <div id="status-bar" class="status-bar"></div>
+    <article id="card" class="card" aria-live="polite"></article>
+    <section id="explanation" class="explanation" hidden></section>
+    <div id="actions" class="actions"></div>
+  </main>
+
+  <dialog id="help-dialog">
+    <h2>Keyboard shortcuts</h2>
+    <ul>
+      <li>select option <kbd>1</kbd>–<kbd>9</kbd></li>
+      <li>check / next <kbd>Enter</kbd></li>
+      <li>reveal (concept cards) <kbd>Space</kbd></li>
+      <li>mark wrong & next <kbd>R</kbd></li>
+      <li>toggle theme <kbd>T</kbd></li>
+      <li>this help <kbd>?</kbd></li>
+    </ul>
+    <button class="primary" onclick="document.getElementById('help-dialog').close()">Close</button>
+  </dialog>
+
+  <div id="error" class="error" hidden></div>
+
+  <script src="questions-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
